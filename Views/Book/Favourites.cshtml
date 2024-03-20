@@ -1,0 +1,47 @@
+﻿@model IEnumerable<CLDV6211_ICE_Task_1.Models.Book>
+
+@{
+    ViewData["Title"] = "Favourite Books";
+}
+
+<h1>Favourite Books</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Description</th>
+            <th>Release Date</th>
+            <th>Price</th>
+            <th>Genre</th>
+            <th>Rating</th>
+            <th>Action</th> <!-- Added a new column for the action button -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.Description</td>
+                <td>@book.ReleaseDate.ToShortDateString()</td>
+                <td>@book.Price</td>
+                <td>@book.Genre</td>
+                <td>@book.Rating</td>
+                <td>
+                    @if (book.IsFavorited)
+                    {
+                        <form asp-controller="Book" asp-action="RemoveFromFavourites" method="post">
+                            <input type="hidden" name="id" value="@book.Id" />
+                            <button type="submit" class="btn btn-danger">Remove from Favorites</button>
+                        </form>
+
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
